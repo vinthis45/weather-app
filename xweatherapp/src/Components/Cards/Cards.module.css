@@ -1,0 +1,28 @@
+.container {
+    margin-top: 40px;
+    display: flex;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    gap: 50px;
+    width: 80%;
+}
+
+.cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    width: 250px;
+    border-radius: 5px;
+    box-shadow: 3px 3px 4px 5px #ccc;
+}
+
+.title{
+    margin-top: 20px;
+    margin-bottom: -10px;
+    font-size: 17px;
+    font-weight: bold;
+}
