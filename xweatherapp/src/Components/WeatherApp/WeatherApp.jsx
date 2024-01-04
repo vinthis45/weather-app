@@ -45,7 +45,9 @@ export default function WeatherApp() {
         }
     };
 
-
+    useEffect(() => {
+        fetchWeatherData(searchTerm);
+    }, [])
 
 
 
