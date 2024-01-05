@@ -52,7 +52,11 @@ const WeatherDisplay = ({ city }) => {
         setWeatherData(response.data)
       }).catch((error) => {
         console.error("Error fetching data: ", error);
+      if (error.response && error.response.status === 500) {
+        alert("Internal Server Error: Failed to fetch weather data");
+      } else {
         alert("Failed to fetch weather data");
+      }
       }).finally(() => {
         setIsLoading(false);
       })
