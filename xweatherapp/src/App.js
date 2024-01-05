@@ -68,7 +68,7 @@ const WeatherDisplay = ({ city }) => {
       }
     };
     clearTimeout(debounceTimer.current);
-    debounceTimer.current = setTimeout(fetchData, 1000);
+    debounceTimer.current = setTimeout(fetchData, 500);
     return () => {
       clearTimeout(debounceTimer.current);
     };
