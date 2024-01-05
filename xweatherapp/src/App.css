@@ -41,7 +41,7 @@
 
 }
 
-.weather-card-container {
+.weather-cards {
   margin-top: 40px;
   display: flex;
   gap: 45px;
