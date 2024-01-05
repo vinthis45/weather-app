@@ -1,6 +1,6 @@
 
 import './App.css';
-import React, { useEffect, useState ,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 
 const SearchBar = ({ onSearch }) => {
@@ -39,40 +39,25 @@ const WeatherCard = ({ title, data }) => {
 const WeatherDisplay = ({ city }) => {
   const [weatherData, setWeatherData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  
-  const debounceTimer = useRef(0);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (!city) {
-          
-          setWeatherData(null);
-          return;
+    if (city) {
+      setIsLoading(true);
+      axios.get("https://api.weatherapi.com/v1/current.json", {
+        params: {
+          key: "5898514c932c450190e63739232909",
+          q: city,
         }
-
-        setIsLoading(true);
-        const res = await axios.get("https://api.weatherapi.com/v1/current.json", {
-          params: {
-            key: "5898514c932c450190e63739232909",
-            q: city,
-          },
-        });
-        console.log(res.data);
-        setWeatherData(res.data);
-      } catch (err) {
-        console.error("Error fetching data", err);
-       
-      } finally {
+      }).then((response) => {
+        setWeatherData(response.data)
+      }).catch((error) => {
+        console.error("Error fetching data: ", error);
+        alert("Failed to fetch weather data");
+      }).finally(() => {
         setIsLoading(false);
-      }
-    };
-    clearTimeout(debounceTimer.current);
-    debounceTimer.current = setTimeout(fetchData, 500);
-    return () => {
-      clearTimeout(debounceTimer.current);
-    };
-  }, [city]);
+      })
+    }
+  }, [city])
 
   return (
     <div className="weather-display">
