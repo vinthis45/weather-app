@@ -40,22 +40,27 @@ const WeatherDisplay = ({ city }) => {
   const [weatherData, setWeatherData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const fetchData = async (city) => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get(`https://api.weatherapi.com/v1/current.json`, {
+        params: {
+          key: "5898514c932c450190e63739232909",
+          q: city,
+        },
+      });
+      setWeatherData(response.data);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+      alert("Failed to fetch weather data");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (city) {
-      setIsLoading(true);
-  
-      const apiUrl = `https://api.weatherapi.com/v1/current.json?key=5898514c932c450190e63739232909&q=${city}`;
-  
-      axios.get(apiUrl)
-        .then((response) => {
-          setWeatherData(response.data);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching data: ", error);
-          setIsLoading(false);
-          alert("Failed to fetch weather data");
-        });
+      fetchData(city);
     }
   }, [city]);
 
