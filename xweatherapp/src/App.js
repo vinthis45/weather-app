@@ -41,6 +41,7 @@ const WeatherDisplay = ({ city }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const getWeatherData = async () => {
+    setIsLoading(true);
     try {
       const res = await axios.get("https://api.weatherapi.com/v1/current.json", {
         params: {
