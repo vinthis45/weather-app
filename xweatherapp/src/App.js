@@ -1,6 +1,6 @@
 
 import './App.css';
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import axios from "axios";
 
 const SearchBar = ({ onSearch }) => {
@@ -66,12 +66,13 @@ const WeatherDisplay = ({ city }) => {
     }
   };
 
+  const memoizedGetWeather = useMemo(() => getWeather, []);
+
   useEffect(() => {
     if (city) {
-      getWeather(city);
+      memoizedGetWeather(city);
     }
-
-  }, [city]);
+  }, [city, memoizedGetWeather]);
 
   return (
     <div className="weather-display">
