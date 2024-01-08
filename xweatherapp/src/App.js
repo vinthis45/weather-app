@@ -40,31 +40,32 @@ const WeatherDisplay = ({ city }) => {
   const [weatherData, setWeatherData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const getWeather = async (city) => {
-    try {
-      setIsLoading(true);
-      const response = await axios.get(`https://api.weatherapi.com/v1/current.json`, {
-        params: {
-          key: "5898514c932c450190e63739232909",
-          q: city,
-        },
-      });
-      if (response.status === 500) {
-        throw new Error("Internal Server Error");
-      }
+  const getWeather = (city) => {
+    setIsLoading(true);
   
-      setWeatherData(response.data);
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-      if (error.message === "Internal Server Error") {
-        alert("Failed to fetch weather data due to an internal server error");
-      } else {
-        alert("Failed to fetch weather data");
-      }
-    } finally {
-      setIsLoading(false);
-    }
+    fetch(`https://api.weatherapi.com/v1/current.json?key=5898514c932c450190e63739232909&q=${city}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Internal Server Error");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setWeatherData(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        if (error.message === "Internal Server Error") {
+          alert("Failed to fetch weather data due to an internal server error");
+        } else {
+          alert("Failed to fetch weather data");
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
+  
 
   const memoizedGetWeather = useMemo(() => getWeather, []);
 
