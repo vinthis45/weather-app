@@ -49,10 +49,18 @@ const WeatherDisplay = ({ city }) => {
           q: city,
         },
       });
+      if (response.status === 500) {
+        throw new Error("Internal Server Error");
+      }
+  
       setWeatherData(response.data);
     } catch (error) {
       console.error("Error fetching data: ", error);
-      alert("Failed to fetch weather data");
+      if (error.message === "Internal Server Error") {
+        alert("Failed to fetch weather data due to an internal server error");
+      } else {
+        alert("Failed to fetch weather data");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -62,6 +70,7 @@ const WeatherDisplay = ({ city }) => {
     if (city) {
       getWeather(city);
     }
+
   }, [city]);
 
   return (
