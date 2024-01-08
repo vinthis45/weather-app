@@ -40,19 +40,22 @@ const WeatherDisplay = ({ city }) => {
   const [weatherData, setWeatherData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const API_KEY = "5898514c932c450190e63739232909";
+  const API_ENDPOINT = "https://api.weatherapi.com/v1/current.json";
+
   const getWeather = async (city) => {
     try {
       setIsLoading(true);
-      const response = await axios.get(`https://api.weatherapi.com/v1/current.json`, {
+      const response = await axios.get(API_ENDPOINT, {
         params: {
-          key: "5898514c932c450190e63739232909",
+          key: API_KEY,
           q: city,
         },
       });
       if (response.status === 500) {
         throw new Error("Internal Server Error");
       }
-  
+
       setWeatherData(response.data);
     } catch (error) {
       console.error("Error fetching data: ", error);
