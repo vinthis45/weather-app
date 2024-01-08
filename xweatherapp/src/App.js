@@ -40,7 +40,7 @@ const WeatherDisplay = ({ city }) => {
   const [weatherData, setWeatherData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchData = async (city) => {
+  const getWeather = async (city) => {
     try {
       setIsLoading(true);
       const response = await axios.get(`https://api.weatherapi.com/v1/current.json`, {
@@ -60,7 +60,7 @@ const WeatherDisplay = ({ city }) => {
 
   useEffect(() => {
     if (city) {
-      fetchData(city);
+      getWeather(city);
     }
   }, [city]);
 
